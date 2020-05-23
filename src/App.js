@@ -9,20 +9,24 @@ lastName: "",
 age: "",
 gender: "",
 destination: "",
-dietryRestrictions: {
 isVegan: false,
 isKosher: false,
 isLactoseFree: false
 }
 
-  }
+  
   this.handleChange=this.handleChange.bind(this)
 }
 handleChange(event){
-const {name ,value}= event.target
+const {name ,value, type, checked}= event.target
+type === "checkbox" ? this.setState({[name]: checked}) :
 this.setState({[name]: value})
 }
 render(){
+  let dietry 
+  if(this.state.isVegan){dietry= "Vegan"}
+  else if(this.state.isKosher){dietry= "Kosher"}
+  else{dietry="lactose free"}
   return(
 <main> 
 <form>
@@ -60,6 +64,19 @@ onChange={this.handleChange}
 </select>
 <br/>
 <label>
+  <input
+  type="checkbox"
+  name="IsVegan"
+  onChange={this.handleChange}
+  checked={this.state.isVegan}/> vegan?
+</label>
+<br/>
+<label>
+  <input
+  type="checkbox"
+  name="IsKosher"
+  onChange={this.handleChange}
+  checked={this.state.isKosher}/> Kosher?
 </label>
 <br/>
 <button>submit</button>
@@ -70,7 +87,8 @@ onChange={this.handleChange}
 <p> Your Age: {this.state.age} </p>
 <p> Gender: {this.state.gender}</p>
 <p> Your Destination: {this.state.destination} </p>
-<p> your dietry Restrictions: {this.state.dietryRestrictions}</p>
+<p> your dietry Restrictions:{dietry}</p>
+
 </main>
   )
 }
